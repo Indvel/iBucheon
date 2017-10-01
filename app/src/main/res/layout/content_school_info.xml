@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="app.indvel.ibucheon.SchoolInfo"
+    tools:showIn="@layout/activity_school_info">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="true"
+        android:measureWithLargestChild="false"
+        android:nestedScrollingEnabled="true"
+        android:orientation="vertical"
+        android:paddingBottom="50dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ibucheon_logo"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"/>
+
+        <!--<TextView
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/info"
+            android:textColor="#109200"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/infotitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/info_title"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"/>-->
+
+        <TextView
+            android:id="@+id/prin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/principal"
+            android:textColor="#109200"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/prin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/school_principal"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/majors"
+            android:textColor="#109200"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/majorlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/majors_list"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/symbols"
+            android:textColor="#109200"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/symbollist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/symbols_list"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/schsong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/song"
+            android:textColor="#109200"
+            android:textSize="24dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/school_song"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

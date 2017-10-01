@@ -1,0 +1,16 @@
+<resources>>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="SettingsTheme" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">#2e7d32</item>
+        <item name="android:colorPrimaryDark">#005005</item>
+        <item name="android:colorAccent">#d32f2f</item>
+    </style>
+
+</resources>

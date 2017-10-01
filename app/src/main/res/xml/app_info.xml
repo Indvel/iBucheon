@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:layout="@layout/preference_image">
+    </Preference>
+
+    <PreferenceCategory android:title="앱 정보">
+
+            <Preference
+                android:summary="@string/app_developer_name"
+                android:title="@string/app_developer">
+            </Preference>
+
+            <Preference
+                android:key="version"
+                android:summary="0.0.0"
+                android:title="@string/app_version">
+            </Preference>
+
+        <Preference
+            android:summary="@string/app_used_api_name"
+            android:title="@string/app_used_api">
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="그 외">
+
+        <Preference
+            android:summary="@string/send_mail_toDev"
+            android:title="@string/send_mail">
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="mailto:fbtkdqja112@gmail.com">
+            </intent>
+        </Preference>
+
+        <Preference
+            android:summary="@string/copyright"
+            android:title="@string/app_copyright">
+        </Preference>
+
+    </PreferenceCategory>
+</PreferenceScreen>

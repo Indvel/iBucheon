@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">정산고 App</string>
+    <string name="full_app_name">부천정보산업고등학교 앱</string>
+    <string name="school_url">ibucheon.hs.kr</string>
+    <string name="share">공유하기</string>
+    <string name="goto_site">학교 홈페이지 바로가기</string>
+    <string name="show_another_app">개발자의 다른 앱 보기</string>
+    <string name="school_info">학교 소개</string>
+    <string name="school_info_sub">부천정보산업고등학교를 소개합니다.</string>
+    <string name="school_notice">공지 사항</string>
+    <string name="school_notice_sub">학교 공지사항을 확인합니다.</string>
+    <string name="school_schedule">학사 일정</string>
+    <string name="school_schedule_sub">학교 일정을 확인합니다.</string>
+    <string name="school_food">급식</string>
+    <string name="school_food_sub">학교 식단표를 확인합니다.</string>
+    <string name="app_info">앱 정보</string>
+    <string name="app_info_sub">정산고 App의 정보를 확인합니다.</string>
+    <string name="title_activity_school_info">소개</string>
+    <string name="info">학교 소개</string>
+    <string name="info_title">
+        부천정보산업고등학교(Bucheon Information Industry High School, 구 부천상업고등학교)는 1993년 개교한 상업계 특성화고등학교이다. 학교 성별은 남녀공학이며, 공립으로 운영 되고 있다. 현재 경기도 부천시 원미구 신상로 94(상동 391)에 위치하고 있다.
+    </string>
+
+    <string name="principal">교장(校長)</string>
+    <string name="majors">학과(學科)</string>
+    <string name="majors_list">디지털콘텐츠마케팅과\n관광서비스마케팅과\n금융서비스마케팅과\n커뮤니케이션디자인과</string>
+    <string name="symbols">상징(象徵)</string>
+    <string name="symbols_list">교훈(校訓) : 성실\n교조(校鳥) : 용맹과 비상의 독수리\n교화(校花) : 사랑과 정렬의 장미\n교목(校木) : 지조와 절개의 소나무</string>
+    <string name="song">교가(校歌)</string>
+    <string name="school_name">부천정보산업고등학교</string>
+    <string name="school_location">경기도 부천시 원미구 신상로 94(상동 391)</string>
+    <string name="school_call">032-322-2169</string>
+    <string name="school_fax">032-322-1901</string>
+    <string name="school_principal">최규남</string>
+    <string name="action_settings">설정</string>
+    <string name="title_activity_school_notice">공지사항</string>
+    <string name="title_activity_school_food">식단표</string>
+    <string name="title_activity_app_info">앱 정보</string>
+    <string name="large_text">"Material is the metaphor.\n\n"</string>
+    <string name="app_developer">개발자</string>
+    <string name="app_developer_name">RSB</string>
+    <string name="app_version">앱 버전</string>
+    <string name="app_used_api">사용 API(라이브러리)</string>
+    <string name="app_used_api_name">Jsoup, School API</string>
+    <string name="send_mail">메일 보내기</string>
+    <string name="send_mail_toDev">개발자에게 메일을 보냅니다.</string>
+    <string name="app_copyright">저작권</string>
+    <string name="copyright">Copyright 2017, RSB All rights reserved.</string>
+    <string name="lunch">중식</string>
+    <string name="dinner">석식</string>
+    <string name="title_activity_school_schedule">학사 일정</string>
+    <string name="title_activity_nagivation">Nagivation</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

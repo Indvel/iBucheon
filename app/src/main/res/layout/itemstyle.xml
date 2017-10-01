@@ -1,0 +1,69 @@
+<android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/noticecv"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true"
+            tools:context=".SchoolNotice">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="12dp"
+                android:descendantFocusability="blocksDescendants"
+                android:background="?android:attr/selectableItemBackground">
+
+
+                <TextView
+                    android:id="@+id/item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:textColor="#000"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:text="Title"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/item_writer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/item_title"
+                    android:layout_alignStart="@+id/item_title"
+                    android:layout_below="@+id/item_title"
+                    android:textColor="#5D5D5D"
+                    android:text="Writer"/>
+
+                <TextView
+                    android:id="@+id/item_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/item_title"
+                    android:layout_alignRight="@+id/item_title"
+                    android:layout_alignTop="@+id/item_writer"
+                    android:textColor="#5D5D5D"
+                    android:text="Date"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
