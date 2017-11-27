@@ -4,16 +4,16 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/foodcv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="3dp"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true"
         tools:context=".SchoolFood">
 
         <RelativeLayout
             android:id="@+id/rel"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackground"
@@ -70,7 +70,7 @@
                         android:layout_below="@+id/food_lunch"
                         android:layout_marginTop="3dp"
                         android:maxLines="20"
-                        android:text="급식이 없습니다."
+                        android:text="@string/text_no_lunch"
                         android:textColor="#5D5D5D"
                         android:textSize="16sp"
                         >
@@ -96,7 +96,7 @@
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="6dp"
                         android:maxLines="20"
-                        android:text="급식이 없습니다."
+                        android:text="@string/text_no_dinner"
                         android:textColor="#5D5D5D"
                         android:textSize="16sp"
                         >

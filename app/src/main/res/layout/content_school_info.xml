@@ -31,32 +31,13 @@
             android:paddingTop="20dp"
             android:paddingBottom="20dp"/>
 
-        <!--<TextView
-            android:id="@+id/info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/info"
-            android:textColor="#109200"
-            android:textSize="24dp"/>
-
-        <TextView
-            android:id="@+id/infotitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/info_title"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:gravity="center"/>-->
-
         <TextView
             android:id="@+id/prin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:text="@string/principal"
-            android:textColor="#109200"
+            android:textColor="@color/colorPrimary"
             android:textSize="24dp"/>
 
         <TextView
@@ -75,8 +56,34 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:text="@string/majors"
-            android:textColor="#109200"
+            android:textColor="@color/colorPrimary"
             android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/after"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/after_2018"
+            android:textColor="#6d6d6d"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/majorlist_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/majors_list_new"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/before"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/before_2018"
+            android:textColor="#6d6d6d"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/majorlist"
@@ -94,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:text="@string/symbols"
-            android:textColor="#109200"
+            android:textColor="@color/colorPrimary"
             android:textSize="24dp"/>
 
         <TextView
@@ -108,22 +115,35 @@
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/schsong"
+            android:id="@+id/schtel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:text="@string/song"
-            android:textColor="#109200"
+            android:text="@string/school_call"
+            android:textColor="@color/colorPrimary"
             android:textSize="24dp"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="false"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:src="@drawable/school_song"
+        <TextView
+            android:id="@+id/tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/school_tel"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:autoLink="phone"/>
+
+        <TextView
+            android:id="@+id/fax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/school_fax"
+            android:textColor="#000000"
+            android:textSize="18dp"
             android:gravity="center"/>
+
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

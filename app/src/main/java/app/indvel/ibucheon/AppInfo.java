@@ -14,6 +14,8 @@ public class AppInfo extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 

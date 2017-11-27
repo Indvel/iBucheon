@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -205,7 +206,24 @@ public class SchoolNotice extends AppCompatActivity {
 
             ListData mData = mListData.get(position);
 
-            holder.mTitle.setText(mData.mTitle);
+            if(mData.mTitle.contains("[공지]")) {
+
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
+                   holder.mTitle.setText(Html.fromHtml("<font color=#f44336>[공지] </font>" + mData.mTitle.replace("[공지]", "")));
+                } else {
+                    holder.mTitle.setText(Html.fromHtml("<font color=#f44336>[공지] </font>" + mData.mTitle.replace("[공지]", ""), Html.FROM_HTML_MODE_LEGACY));
+                }
+            } else if(mData.mTitle.contains("[일반]")) {
+
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
+                    holder.mTitle.setText(Html.fromHtml("<font color=#03a9f4>[일반] </font>" + mData.mTitle.replace("[일반]", "")));
+                } else {
+                    holder.mTitle.setText(Html.fromHtml("<font color=#03a9f4>[일반] </font>" + mData.mTitle.replace("[일반]", ""), Html.FROM_HTML_MODE_LEGACY));
+                }
+            } else {
+                holder.mTitle.setText(mData.mTitle);
+            }
+
             holder.mWriter.setText("작성자: " + mData.mWriter);
             holder.mDate.setText(mData.mDate);
 

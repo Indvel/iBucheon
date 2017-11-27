@@ -108,14 +108,19 @@ public class SchoolFood extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            menu = api.getMonthlyMenu(foodYear, foodMonth);
+            try {
 
-            for(int i = 0; i < menu.size(); i++) {
-                if(String.valueOf(menu.get(i)) != "") {
-                    String lunch = (menu.get(i).lunch).replaceAll("[0-9]","").replaceAll("\\.","");
-                    String dinner = (menu.get(i).dinner).replaceAll("[0-9]","").replaceAll("\\.","");
-                    fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + (i + 1) + "일 " + getWeek(foodYear, realMonth, (i + 1)) + "요일",String.valueOf(lunch),String.valueOf(dinner));
+                menu = api.getMonthlyMenu(foodYear, foodMonth);
+
+                for (int i = 0; i < menu.size(); i++) {
+                    if (String.valueOf(menu.get(i)) != "") {
+                        String lunch = (menu.get(i).lunch).replaceAll("[0-9]", "").replaceAll("\\.", "");
+                        String dinner = (menu.get(i).dinner).replaceAll("[0-9]", "").replaceAll("\\.", "");
+                        fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + (i + 1) + "일 " + getWeek(foodYear, realMonth, (i + 1)) + "요일", String.valueOf(lunch), String.valueOf(dinner));
+                    }
                 }
+            } catch(Exception e) {
+                e.printStackTrace();
             }
 
             return null;

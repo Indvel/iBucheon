@@ -77,7 +77,7 @@ public class ScrollingActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_share) {
             Intent msg = new Intent(Intent.ACTION_SEND);
             msg.addCategory(Intent.CATEGORY_DEFAULT);
-            msg.putExtra(Intent.EXTRA_SUBJECT, "공유");
+            msg.putExtra(Intent.EXTRA_SUBJECT, "부천정보산업고등학교 앱");
             msg.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=app.indvel.ibucheon");
             msg.putExtra(Intent.EXTRA_TITLE, "정산고 앱");
             msg.setType("text/plain");

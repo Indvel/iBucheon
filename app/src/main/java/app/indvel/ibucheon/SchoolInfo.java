@@ -1,8 +1,11 @@
 package app.indvel.ibucheon;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 public class SchoolInfo extends AppCompatActivity {
 
@@ -12,6 +15,15 @@ public class SchoolInfo extends AppCompatActivity {
         setContentView(R.layout.activity_school_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.location);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SchoolInfo.this, MapsActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 }
