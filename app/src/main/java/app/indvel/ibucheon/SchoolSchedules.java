@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +20,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.hyunjun.school.School;
-import org.hyunjun.school.SchoolSchedule;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class SchoolSchedules extends AppCompatActivity {
 
+    private String url = "http://ibucheon.hs.kr/calendar.list?ym=";
     public static ScheduleAsyncTask scheduleAsyncTask;
     private ListView mListView;
     private ArrayList<ListData> mListData = new ArrayList<>();
@@ -42,8 +44,6 @@ public class SchoolSchedules extends AppCompatActivity {
     Integer realCalMonth;
     Integer calDay;
     String calWeek;
-    List<SchoolSchedule> schedule;
-    School api = new School(School.Type.HIGH, School.Region.GYEONGGI, "J100000585");
     ConnectivityManager cManager;
 
     @Override
@@ -107,16 +107,29 @@ public class SchoolSchedules extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            schedule = api.getMonthlySchedule(calYear, calMonth);
+            try {
 
-            for(int i = 0; i < schedule.size(); i++) {
-                if(String.valueOf(schedule.get(i)) != "") {
-                    mListData.add(new ListData(calYear + "년 " + calMonth + "월 " + (i + 1) + "일 " + getWeek(calYear, realCalMonth, (i + 1)) + "요일", String.valueOf(schedule.get(i))));
-                } else {
-                    mListData.add(new ListData(calYear + "년 " + calMonth + "월 " + (i + 1) + "일 " + getWeek(calYear, realCalMonth, (i + 1)) + "요일", "일정이 없습니다."));
+                String ym = String.valueOf(calYear) + String.format("%02d", calMonth);
+
+                Document doc = Jsoup.connect(url + ym)
+                        .timeout(2000)
+                        .get();
+
+                Elements schedule = doc.select("div#calendarArea > table > tbody > tr > td");
+
+                for(Element e : schedule) {
+                    String span = e.select("span").text();
+                    String content = e.select("ul > li > a").text();
+                    if(span != "" && content != "") {
+                        mListData.add(new ListData(calYear + "년 " + calMonth + "월 " + span + "일 " + getWeek(calYear, realCalMonth, Integer.valueOf(span)) + "요일", content));
+                    } else if(span != "" && content == "") {
+                        mListData.add(new ListData(calYear + "년 " + calMonth + "월 " + span + "일 " + getWeek(calYear, realCalMonth, Integer.valueOf(span)) + "요일", "일정이 없습니다"));
+                    }
                 }
+
+            } catch(IOException e) {
+                e.printStackTrace();
             }
-            System.out.println("ListData Size: "+mListData.size());
             return result;
         }
 
@@ -131,7 +144,6 @@ public class SchoolSchedules extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             mListView.setSelection(calDay - 1);
             mDialog.dismiss();
-            Log.d("Schedule Size",String.valueOf(schedule.size()));
             super.onPostExecute(s);
         }
     }
@@ -169,7 +181,6 @@ public class SchoolSchedules extends AppCompatActivity {
                 } else {
 
                     mCalendar.set(year, monthOfYear, dayOfMonth);
-                    Log.d("Selected Date", mCalendar.get(Calendar.YEAR) + "-" + (mCalendar.get(Calendar.MONTH) + 1) + "-" + mCalendar.get(Calendar.DAY_OF_MONTH));
                     scheduleAsyncTask = new ScheduleAsyncTask();
                     scheduleAsyncTask.execute();
                 }
@@ -232,27 +243,54 @@ public class SchoolSchedules extends AppCompatActivity {
             holder.mContent.setText(listViewItem.mContent);
             holder.mContent.setTextColor(Color.parseColor("#5d5d5d"));
 
-            if(!listViewItem.mContent.equals("일정이 없습니다.")) {
-                holder.mContent.setTextColor(Color.parseColor("#00c853"));
+            if(!listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#43a047"));
             }
 
-            if(listViewItem.mDate.contains("토요일")) {
-                holder.mContent.setTextColor(Color.parseColor("#00b0ff"));
-            }
-
-            if(listViewItem.mDate.contains("일요일")) {
-                holder.mContent.setText("공휴일");
-            } else {
-                holder.mContent.setText(listViewItem.mContent);
-            }
-
-            if(listViewItem.mDate.contains("1월 1일") || listViewItem.mDate.contains("3월 1일")
-                    || listViewItem.mDate.contains("5월 5일") || listViewItem.mContent.contains("석가탄신일")
-                    || listViewItem.mDate.contains("6월 6일") || listViewItem.mDate.contains("8월 15일")
-                    || listViewItem.mDate.contains("10월 3일") || listViewItem.mDate.contains("10월 9일")
-                    || listViewItem.mDate.contains("12월 25일") || listViewItem.mContent.contains("선거")
-                    || listViewItem.mDate.contains("일요일")) {
+            if(listViewItem.mDate.contains("1월 1일") && listViewItem.mContent.equals("일정이 없습니다")) {
                 holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("신정");
+
+            } else if(listViewItem.mDate.contains("3월 1일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("3·1절");
+
+            } else if(listViewItem.mDate.contains("5월 5일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("어린이날");
+
+            } else if(listViewItem.mContent.contains("석가탄신일")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+
+            } else if(listViewItem.mDate.contains("6월 6일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("현충일");
+
+            } else if(listViewItem.mDate.contains("8월 15일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("어버이날");
+
+            } if(listViewItem.mDate.contains("10월 3일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("개천절");
+
+            } else if(listViewItem.mDate.contains("10월 9일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("한글날");
+
+            } else if(listViewItem.mDate.contains("12월 25일") && listViewItem.mContent.equals("일정이 없습니다")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+                holder.mContent.setText("성탄절");
+
+            } else if(listViewItem.mContent.contains("선거")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+
+            } else if(listViewItem.mDate.contains("토요일")) {
+                holder.mContent.setTextColor(Color.parseColor("#00b0ff"));
+
+            } else if(listViewItem.mDate.contains("일요일")) {
+                holder.mContent.setTextColor(Color.parseColor("#dd2c00"));
+
             }
 
             return convertView;

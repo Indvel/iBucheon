@@ -3,52 +3,55 @@ package app.indvel.ibucheon;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.hyunjun.school.School;
-import org.hyunjun.school.SchoolMenu;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class SchoolFood extends AppCompatActivity {
 
-    public TextView fdate;
-    public TextView fcontent;
-    public TextView fdate_dinner;
-    public TextView fcontent_dinner;
+    private String url = "http://ibucheon.hs.kr/lunch.list?ym=";
+    private String foodUrl = "";
     public static MealAsyncTask asyncTask;
+    public static FoodImageTask imageTask;
     private ListView fListView = null;
     private ListViewAdapter fAdapter = null;
+    private ArrayList<FoodListData> fListData = new ArrayList();
     Calendar mCalendar = Calendar.getInstance();
     Integer foodYear;
     Integer foodMonth;
     Integer realMonth;
     Integer foodDay;
-    String foodWeek;
-    List<SchoolMenu> menu;
-    String date = "";
-    String content = "";
-    String content_dinner = "";
+    Bitmap foodImage = null;
     ProgressDialog mDialog;
-    School api = new School(School.Type.HIGH, School.Region.GYEONGGI, "J100000585");
     ConnectivityManager cManager;
 
     @Override
@@ -83,7 +86,33 @@ public class SchoolFood extends AppCompatActivity {
 
         fListView = (ListView) findViewById(R.id.listView);
         fListView.setFastScrollEnabled(true);
+        fAdapter = new ListViewAdapter(this);
+        fListView.setAdapter(fAdapter);
 
+        fListView.setOnItemClickListener((AdapterView<?> parent, View v, int position, long id) -> {
+            FoodListData mData = fListData.get(position);
+            foodUrl = mData.getImgUrl();
+            imageTask = new FoodImageTask();
+            imageTask.execute();
+        });
+    }
+
+    public void showFoodImage(Bitmap bitmap) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog dialog;
+
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.custom_dialog, null);
+
+        ImageView iv = (ImageView) layout.findViewById(R.id.foodImage);
+        iv.setImageBitmap(bitmap);
+
+        alert.setTitle("급식 미리보기");
+        alert.setView(layout);
+        alert.setPositiveButton("확인", null);
+
+        dialog = alert.create();
+        dialog.show();
     }
 
     public class MealAsyncTask extends AsyncTask<String,Void, String> {
@@ -101,7 +130,9 @@ public class SchoolFood extends AppCompatActivity {
             foodMonth = mCalendar.get(Calendar.MONTH) + 1;
             realMonth = mCalendar.get(Calendar.MONTH);
             foodDay = mCalendar.get(Calendar.DAY_OF_MONTH);
-            fAdapter = new ListViewAdapter();
+
+            fListData = new ArrayList<>();
+            fAdapter = new ListViewAdapter(SchoolFood.this);
             super.onPreExecute();
         }
 
@@ -110,16 +141,31 @@ public class SchoolFood extends AppCompatActivity {
 
             try {
 
-                menu = api.getMonthlyMenu(foodYear, foodMonth);
+                String ym = String.valueOf(foodYear) + String.format("%02d", foodMonth);
 
-                for (int i = 0; i < menu.size(); i++) {
-                    if (String.valueOf(menu.get(i)) != "") {
-                        String lunch = (menu.get(i).lunch).replaceAll("[0-9]", "").replaceAll("\\.", "");
-                        String dinner = (menu.get(i).dinner).replaceAll("[0-9]", "").replaceAll("\\.", "");
-                        fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + (i + 1) + "일 " + getWeek(foodYear, realMonth, (i + 1)) + "요일", String.valueOf(lunch), String.valueOf(dinner));
+                Document doc = Jsoup.connect(url + ym)
+                        .timeout(2000)
+                        .get();
+
+                Elements menu = doc.select("div#foodListArea > table > tbody > tr > td");
+
+                for(Element e : menu) {
+                    String span =  e.select("div.dayBox > span").text();
+                    String content = e.select("div.content > div.lunch > div.tabContent.on > span > a").text();
+                    String imgurl = e.select("div.content > div.lunch > div.tabContent.on > span > a").attr("href");
+
+                    if(span == "") {
+                        span = e.select("span").text();
+                    }
+
+                   if (span != "" && content != "") {
+                        fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + span + "일 " + getWeek(foodYear, realMonth, Integer.valueOf(span)) + "요일", content, "석식 없음", imgurl);
+                    } else if(span != "" && content == "") {
+                        fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + span + "일 " + getWeek(foodYear, realMonth, Integer.valueOf(span)) + "요일", "중식 없음", "석식 없음", imgurl);
                     }
                 }
-            } catch(Exception e) {
+
+            } catch(IOException e) {
                 e.printStackTrace();
             }
 
@@ -135,11 +181,62 @@ public class SchoolFood extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
 
+            fAdapter.notifyDataSetChanged();
+            fListView.setAdapter(fAdapter);
+            fListView.setSelection(foodDay - 1);
             mDialog.dismiss();
             super.onPostExecute(s);
-            fListView.setAdapter(fAdapter);
-            fAdapter.notifyDataSetChanged();
-            fListView.setSelection(foodDay - 1);
+        }
+    }
+
+    public class FoodImageTask extends AsyncTask<String,Void, String> {
+        public String result;
+
+        @Override
+        protected void onPreExecute() {
+
+            mDialog = new ProgressDialog(SchoolFood.this);
+            mDialog.setMessage("잠시만 기다려 주세요...");
+            mDialog.setCancelable(true);
+            mDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+                String mainUrl = "http://ibucheon.hs.kr";
+
+                Document document = Jsoup.connect(mainUrl + foodUrl)
+                        .timeout(2000)
+                        .get();
+
+                String sel = document.select("div.objContent1 > ul.calorie > a > img").attr("src");
+
+                URL link = new URL(mainUrl + sel);
+
+                HttpURLConnection conn = (HttpURLConnection) link.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setDoOutput(false);
+                conn.connect();
+
+                foodImage = BitmapFactory.decodeStream(conn.getInputStream());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            mDialog.dismiss();
+            showFoodImage(foodImage);
+            super.onPostExecute(s);
         }
     }
 
@@ -175,7 +272,6 @@ public class SchoolFood extends AppCompatActivity {
                 } else {
 
                     mCalendar.set(year, monthOfYear, dayOfMonth);
-                    Log.d("Selected Date", mCalendar.get(Calendar.YEAR) + "-" + (mCalendar.get(Calendar.MONTH) + 1) + "-" + mCalendar.get(Calendar.DAY_OF_MONTH));
                     asyncTask = new MealAsyncTask();
                     asyncTask.execute();
                 }
@@ -188,10 +284,9 @@ public class SchoolFood extends AppCompatActivity {
 
     private class ListViewAdapter extends BaseAdapter {
         private Context mContext = null;
-        private ArrayList<FoodListData> fListData = new ArrayList<FoodListData>();
 
-        public ListViewAdapter() {
-
+        public ListViewAdapter(Context mContext) {
+            this.mContext = mContext;
         }
 
         @Override
@@ -209,12 +304,13 @@ public class SchoolFood extends AppCompatActivity {
             return position;
         }
 
-        public void addItem(String mDate, String lunch, String dinner){
+        public void addItem(String mDate, String lunch, String dinner, String imgUrl){
             FoodListData mData = new FoodListData();
 
             mData.setFoodDate(mDate);
             mData.setLunchFood(lunch);
             mData.setDinnerFood(dinner);
+            mData.setImgUrl(imgUrl);
             fListData.add(mData);
         }
 

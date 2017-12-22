@@ -85,10 +85,10 @@ public class ScrollingActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_another) {
 
             try {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://developer?id=BLATE"));
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://developer?id=Infinity Grp."));
                 startActivity(i);
             } catch(ActivityNotFoundException e) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=BLATE"));
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Infinity Grp."));
                 startActivity(i);
             }
         }

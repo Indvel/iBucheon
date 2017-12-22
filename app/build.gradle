@@ -8,8 +8,8 @@ android {
         applicationId "app.indvel.ibucheon"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 15
-        versionName "1.1.4"
+        versionCode 17
+        versionName "1.1.6"
 
         jackOptions {
             enabled true
@@ -31,7 +31,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':schoolapi-3.0.3')
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:design:25.0.0'
     compile 'com.android.support:recyclerview-v7:25.0.0'

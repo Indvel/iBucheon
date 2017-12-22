@@ -15,6 +15,9 @@ public class FoodListData {
     //석식
     private String dinnerFood;
 
+    //급식 사진
+    private String imgUrl;
+
     public void setFoodDate(String date) {
         fDate = date;
     }
@@ -27,6 +30,8 @@ public class FoodListData {
         dinnerFood = content;
     }
 
+    public void setImgUrl(String content) { imgUrl = content; }
+
     public String getFoodDate() {
         return this.fDate;
     }
@@ -38,4 +43,6 @@ public class FoodListData {
     public String getDinnerFood() {
         return this.dinnerFood;
     }
+
+    public String getImgUrl() { return this.imgUrl; }
 }

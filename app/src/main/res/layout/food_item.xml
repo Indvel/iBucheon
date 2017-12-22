@@ -48,7 +48,7 @@
                         android:maxLines="1"
                         android:text="2000년 00월 00일"
                         android:textColor="#000"
-                        android:textSize="28sp"
+                        android:textSize="26sp"
                         />
 
                     <TextView
@@ -80,7 +80,7 @@
                         android:id="@+id/food_dinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="4dp"
                         android:maxLines="1"
                         android:text="@string/dinner"
                         android:textColor="#353535"
