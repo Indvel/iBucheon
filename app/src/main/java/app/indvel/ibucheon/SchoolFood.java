@@ -151,16 +151,18 @@ public class SchoolFood extends AppCompatActivity {
 
                 for(Element e : menu) {
                     String span =  e.select("div.dayBox > span").text();
-                    String content = e.select("div.content > div.lunch > div.tabContent.on > span > a").text();
+                    String content = e.select("div.content > div.lunch > div.tabContent.on > span > a").html().
+                            replaceAll("<br>", "\n").replace(".", "").replace(" ", "")
+                            .replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&nbsp;", " ");
                     String imgurl = e.select("div.content > div.lunch > div.tabContent.on > span > a").attr("href");
 
                     if(span == "") {
                         span = e.select("span").text();
                     }
 
-                   if (span != "" && content != "") {
+                   if (span != "" && content.length() > 1) {
                         fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + span + "일 " + getWeek(foodYear, realMonth, Integer.valueOf(span)) + "요일", content, "석식 없음", imgurl);
-                    } else if(span != "" && content == "") {
+                    } else if(span != "" && content.length() < 1) {
                         fAdapter.addItem(foodYear + "년 " + foodMonth + "월 " + span + "일 " + getWeek(foodYear, realMonth, Integer.valueOf(span)) + "요일", "중식 없음", "석식 없음", imgurl);
                     }
                 }
